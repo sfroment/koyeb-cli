@@ -95,7 +95,20 @@ Use "koyeb [command] --help" for more information about a command.
 
 ### Enabling shell auto-completion
 
-`koyeb` has auto-completion support for `bash`, `zsh` and `fish`.
+`koyeb` has auto-completion support for `bash`, `zsh`, `fish`, and `powershell`.
+
+The way completions are installed depends on how you installed the CLI:
+
+- **Homebrew** (`brew install koyeb/tap/koyeb`): completions for `bash`, `zsh`, and `fish` are installed automatically. Start a new shell to pick them up.
+- **GitHub release archives**: each archive includes a `completions/` directory with pre-generated scripts for all four shells. Copy the appropriate file to your shell's completion directory (see the table below).
+- **`go install`**: generate the completion script manually with `koyeb completion <shell>` and source it or copy it as described below.
+
+| Shell | File | Destination |
+| --- | --- | --- |
+| bash | `completions/koyeb.bash` | `/etc/bash_completion.d/koyeb` (Linux) or `/usr/local/etc/bash_completion.d/koyeb` (macOS) |
+| zsh | `completions/_koyeb` | `${fpath[1]}/_koyeb` |
+| fish | `completions/koyeb.fish` | `~/.config/fish/completions/koyeb.fish` |
+| powershell | `completions/koyeb.ps1` | Add to your PowerShell profile |
 
 #### Bash
 
@@ -142,6 +155,16 @@ To automatically load completions for all your shell session, execute once:
 ```shell
 koyeb completion fish > ~/.config/fish/completions/koyeb.fish
 ```
+
+#### PowerShell
+
+To load completions for your current PowerShell session:
+
+```powershell
+koyeb completion powershell | Out-String | Invoke-Expression
+```
+
+To load completions for every new session, add the output of the above command to your PowerShell profile.
 
 ## Contribute
 
