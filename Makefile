@@ -64,6 +64,17 @@ test: tidy lint
         echo >&2 "make gen-doc has a diff"; \
 	}
 	@rm -rf ./.temp;
+	@mkdir -p ./.temp/completions
+	@go run ./cmd/koyeb completion bash > ./.temp/completions/koyeb.bash
+	@go run ./cmd/koyeb completion zsh > ./.temp/completions/_koyeb
+	@go run ./cmd/koyeb completion fish > ./.temp/completions/koyeb.fish
+	@go run ./cmd/koyeb completion powershell > ./.temp/completions/koyeb.ps1
+	@diff -r -q ./completions ./.temp/completions > /dev/null || { \
+        echo >&2 "completions drift detected — run 'make completions' and commit"; \
+        rm -rf ./.temp; \
+        exit 1; \
+    }
+	@rm -rf ./.temp;
 
 lint:
 	golangci-lint run -v ./...
