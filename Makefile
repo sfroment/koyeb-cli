@@ -51,6 +51,9 @@ fmt: ## apply go format
 gen-doc: ## generate markdown documentation
 	$(call gen-doc-in-dir,docs)
 
+completions: ## generate shell completion scripts
+	./scripts/completions.sh
+
 test: tidy lint
 	@mkdir -p ./.temp
 	@$(call gen-doc-in-dir,.temp)
