@@ -1,4 +1,9 @@
 version: 2
+
+before:
+  hooks:
+    - go mod tidy
+    - ./scripts/completions.sh
 builds:
   - id: default
     main: ./cmd/koyeb
@@ -36,12 +41,16 @@ archives:
   - id: windows
     builds:
       - windows
+    files:
+      - completions/*
     wrap_in_directory: false
     format: zip
   - id: default
     builds:
       - default
-    files: [only-the-binary*]
+    files:
+      - only-the-binary*
+      - completions/*
     wrap_in_directory: false
     format: tar.gz
 
@@ -80,3 +89,4 @@ brews:
       system "#{bin}/koyeb version"
     install: |
       bin.install "koyeb"
+      generate_completions_from_executable(bin/"koyeb", "completion", shells: [:bash, :zsh, :fish])
