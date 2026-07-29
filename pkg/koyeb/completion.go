@@ -39,6 +39,14 @@ $ koyeb completion fish | source
 
 # To load completions for each session, execute once:
 $ koyeb completion fish > ~/.config/fish/completions/koyeb.fish
+
+PowerShell:
+
+# To load completions for the current session:
+$ koyeb completion powershell | Out-String | Invoke-Expression
+
+# To load completions for every new session, add the output of the above
+# command to your PowerShell profile.
 `,
 	DisableFlagsInUseLine: true,
 	ValidArgs:             []string{"bash", "zsh", "fish", "powershell"},
@@ -52,7 +60,7 @@ $ koyeb completion fish > ~/.config/fish/completions/koyeb.fish
 		case "fish":
 			return cmd.Root().GenFishCompletion(os.Stdout, true)
 		case "powershell":
-			return cmd.Root().GenPowerShellCompletion(os.Stdout)
+			return cmd.Root().GenPowerShellCompletionWithDesc(os.Stdout)
 		}
 		return nil
 	},
